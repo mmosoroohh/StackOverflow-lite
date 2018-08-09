@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>StackOverflow-lite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100, 200,300,400,500,600,700,
+    800,900|Coromorant+Garamond:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <!-- Header Area -->
+    <header>
+        <a href="index.html" class="header-brand">StackOverflow-lite</a>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="view_all.html">Questions</a></li>
+                <li><a href="signin.html">Sign Out</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Main Showcase -->
+    <main>
+        <button id="myBtn">Post Question</button>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h2>Post a Question</h2>
+                </div>
+            <div class="modal-body">
+                <textarea id="answer" name="answer" placeholder="Write a question..." style="height: 200px"></textarea>
+                <input type="submit" value="Post a question">
+            </div>
+        </div>   
+        </div>
+        <div class="container-1">
+            <div class="col-75">
+                <h3>My Question | Answer Registry</h3>
+                <hr>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Question</th>
+                            <th>Date Posted</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>How to install Linux LTS 18.0</td>
+                            <td>10th August 2018</td>
+                            <td><a href="view.html">View</a> | <a href="#">Delete</a></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>How to install virtualenv on windows 10</td>
+                            <td>8th August 2018</td>
+                            <td><a href="view.html">View</a> | <a href="#">Delete</a></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>How to install windows 7</td>
+                            <td>6th August 2018</td>
+                            <td><a href="view.html">View</a> | <a href="#">Delete</a></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>How to write a simple Unit test in python</td>
+                            <td>4th August 2018</td>
+                            <td><a href="view.html">View</a> | <a href="#">Delete</a></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>How to make a table in html/css</td>
+                            <td>28th July 2018</td>
+                            <td><a href="view.html">View</a> | <a href="#">Delete</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a href="#" class="previous">&laquo; Previous </a>
+            <a href="#" class="next">Next &raquo;</a>
+        </div>
+    </main>
+</body>
+</html>

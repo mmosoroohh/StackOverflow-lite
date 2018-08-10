@@ -71,6 +71,11 @@ header nav ul li a {
 }
 
 /* Main Area */
+.question {
+    display: grid;
+    position: relative;
+    margin: 0 auto;
+}
 
 .index-banner {
     width: 100%;
@@ -86,10 +91,11 @@ header nav ul li a {
 .vertical-center {
     display: table-cell;
     vertical-align: middle;
+    display: grid;
 }
 .index-banner h2 {
     font-family: Catamaran;
-    font-size: 60px;
+    font-size: 40px;
     font-weight: 900;
     line-height: 70px;
     color: #fff;
@@ -99,13 +105,18 @@ header nav ul li a {
 
 .index-banner h1 {
     font-family: Cormorant Garamond;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 100;
     font-style: italic;
     line-height: 40px;
     color: #fff;
     text-align: center;
     text-shadow: 2px 2px 8px #111;
+}
+.index-banner question {
+    display: grid;
+    position: relative;
+    margin: 0 auto;
 }
 
 .input-container {
@@ -140,7 +151,8 @@ header nav ul li a {
     text-decoration: none;
     padding: 1em 2em;
     border: 1px solid #666;
-    margin: .5em 0;   
+    margin: .5em 0;
+    width: 12%;    
 }
 
 .btn-1 {

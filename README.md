@@ -1,4 +1,4 @@
-# StackOverflow-lite
+# StackOverflow-lite    [![Build Status](https://travis-ci.org/mmosoroohh/StackOverflow-lite.svg?branch=challenge2)](https://travis-ci.org/mmosoroohh/StackOverflow-lite)
 StackOverflow-lite is a platform where people can ask questions and provide answers.
 
 # Usage

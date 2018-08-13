@@ -6,6 +6,7 @@ StackOverflow-lite is a platform where people can ask questions and provide answ
 - [Create an account](https://mmosoroohh.github.io/StackOverflow-lite/UI/signup.html)
 - [Login into your account](https://mmosoroohh.github.io/StackOverflow-lite/UI/signin.html)
 - [Dashboard](https://mmosoroohh.github.io/StackOverflow-lite/UI/dashboard.html)
+- [Post a question](https://mmosoroohh.github.io/StackOverflow-lite/UI/question.html)
 - [View all questions](https://mmosoroohh.github.io/StackOverflow-lite/UI/view_all.html)
 - [View question with answers](https://mmosoroohh.github.io/StackOverflow-lite/UI/view.html)
 

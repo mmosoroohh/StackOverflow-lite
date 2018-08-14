@@ -1,4 +1,4 @@
-# StackOverflow-lite
+# StackOverflow-lite    [![Build Status](https://travis-ci.org/mmosoroohh/StackOverflow-lite.svg?branch=ft-testing-endpoints-api-159718588)](https://travis-ci.org/mmosoroohh/StackOverflow-lite)   [![Coverage Status](https://coveralls.io/repos/github/mmosoroohh/StackOverflow-lite/badge.svg?branch=ft-testing-endpoints-api-159718588)](https://coveralls.io/github/mmosoroohh/StackOverflow-lite?branch=challenge2)
 StackOverflow-lite is a platform where people can ask questions and provide answers.
 
 # Usage

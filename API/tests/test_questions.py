@@ -25,5 +25,19 @@ class StackOverflow_lite(unittest.TestCase):
             '/api/v1/questions', content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
+    def test_view_single_question(self):
+        """Test view a single question."""
+        response = self.client.get(
+            '/api/v1/questions/1', data=json.dumps(self.questions), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+    
+    def test_edit_question(self):
+        """Test can edit a question."""
+        self.client.post(
+            '/api/v1/questions', data=json.dumps(self.questions), content_type='application/json')
+        response = self.client.put(
+            '/api/v1/questions/1', data=json.dumps(self.questions), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
 if __name__ == "__main__":
     unittest.main()

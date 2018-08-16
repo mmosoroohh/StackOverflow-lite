@@ -8,12 +8,18 @@ gunicorn==19.9.0
 itsdangerous==0.24
 Jinja2==2.10
 MarkupSafe==1.0
+<<<<<<< HEAD
 more-itertools==4.3.0
 nose==1.3.7
 pkg-resources==0.0.0
 pluggy==0.7.1
 psycopg2==2.7.5
 py==1.5.4
+=======
+nose==1.3.7
+pkg-resources==0.0.0
+psycopg2==2.7.5
+>>>>>>> 615582da3a1cbc0fec19dd2e838e57d0509ced6b
 PyJWT==1.6.4
 pytest==3.7.1
 six==1.11.0

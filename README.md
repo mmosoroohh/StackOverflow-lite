@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 # StackOverflow-lite    [![Build Status](https://travis-ci.org/mmosoroohh/StackOverflow-lite.svg?branch=ft-Endpoints-with-unittests-159718595)](https://travis-ci.org/mmosoroohh/StackOverflow-lite)   [![Coverage Status](https://coveralls.io/repos/github/mmosoroohh/StackOverflow-lite/badge.svg?branch=ft-testing-endpoints-api-159718588)](https://coveralls.io/github/mmosoroohh/StackOverflow-lite?branch=ft-Endpoints-with-unittests-159718595)
 ![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)  [![Test Coverage](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/test_coverage)](https://codeclimate.com/github/codeclimate/codeclimate/test_coverage)
+=======
+# StackOverflow-lite    [![Build Status](https://travis-ci.org/mmosoroohh/StackOverflow-lite.svg?branch=ft-Endpoints-with-unittests-159718595)](https://travis-ci.org/mmosoroohh/StackOverflow-lite)   
+>>>>>>> 615582da3a1cbc0fec19dd2e838e57d0509ced6b
 StackOverflow-lite is a platform where people can ask questions and provide answers.
 
 # Usage

@@ -4,3 +4,4 @@ venv/
 __init__.pyc
 config.pyc
 test_questions.pyc
+.pytest_cache

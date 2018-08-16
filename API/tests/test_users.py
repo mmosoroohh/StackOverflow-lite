@@ -19,6 +19,7 @@ class StackOverflow_lite_Users(unittest.TestCase):
         response = self.client.post(
             '/api/v1/auth/signup', data=json.dumps(self.users), content_type='application/json')
         self.assertEqual(response.status_code, 201)
+    
 
     def test_signin_user(self):
         """Test to login a registered user."""

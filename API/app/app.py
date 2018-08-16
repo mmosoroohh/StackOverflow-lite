@@ -10,6 +10,7 @@ def create_app(config_name):
     
     users = []
     questions = []
+    answers = []
 
 
     @app.route('/api/v1/auth/signup', methods=['POST'])
@@ -45,7 +46,7 @@ def create_app(config_name):
             'Date posted': request.json.get('Date posted')
         }
         questions.append(question)
-        return jsonify({'Questions': questions}), 201
+        return jsonify({'Message': "Question successfully created"} ,{'Questions': questions}), 201
 
     @app.route('/api/v1/questions', methods=['GET'])
     def view_all_questions():
@@ -56,6 +57,8 @@ def create_app(config_name):
     def single_question(id):
         # retrive a question by it's ID
         single_question = [question for question in questions if question['id'] == id]
+        if len(single_question) == 0:
+            return jsonify({'Message': "No question found"})
 
         return jsonify({'Questions': single_question}), 200
 
@@ -64,12 +67,37 @@ def create_app(config_name):
         # Edit a specific question 
         edit_question = [question for question in questions if question['id'] == id]
         if len(edit_question) == 0:
-            abort (404)
+            return jsonify({'Message': "No question found"})
         edit_question = {
             'Question': request.json.get('Question'),
             'Date modified': request.json.get('Date posted')
         }
         return jsonify({'Questions': edit_question}), 200
 
-    
+    @app.route('/api/v1/questions/<int:id>', methods=['DELETE'])
+    def delete_question(id):
+        # Delete a specific question
+        delete_question = [question for question in questions if question['id'] == id]
+        if len(delete_question) == 0:
+            return jsonify({'Message':"No question found"})
+
+        questions.remove(delete_question[0])
+
+        return jsonify({'Questions': questions}), 200
+
+    @app.route('/api/v1/questions/<int:id>/answers', methods=['POST'])
+    def answer_question(id):
+        # retrive a question by it's ID
+        question = [question for question in questions if question['id'] == id]
+        if len(question) == 0:
+            return jsonify({'Message': "No question found"})
+        # Answer a specific question
+        answer_question = {'id': len(answers)+1,
+            'Answer': request.json.get('Answer'),
+            'Date posted': request.json.get('Date posted')
+        }
+        answers.append(answer_question)
+        return jsonify({'Question': question}, {'Answers': answer_question}), 201
+
+
     return app

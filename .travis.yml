@@ -9,7 +9,8 @@ install:
   - pip install nose
 
 script: 
-  - nosetest --with-coverage --cover-package=app
+  - nosetests --exe -v
+  - nosetests --exe --with-coverage --cover-package=app
 
 after_script:
   - coveralls

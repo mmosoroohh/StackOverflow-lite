@@ -111,7 +111,7 @@ $ nosetests --with-coverage
 </pre>
 
 # Resources
-The API is hosted on [Heroku]()
+The API is hosted on [Heroku](https://stackoverflowlite-app.herokuapp.com/api/v1/questions)
 # Authors
 - Arnold M. Osoro - [mmosoroohh](https://github.com/mmosoroohh)
 

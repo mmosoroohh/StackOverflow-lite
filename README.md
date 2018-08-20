@@ -110,6 +110,73 @@ $ nosetests --with-coverage
 </table>
 </pre>
 
+# Current working endpoints
+- Signup user
+    <pre><code>POST /api/v1/auth/signup:</code><pre>
+    <pre><code>
+    headers = {content_type:application/json}
+
+    {
+        "name": "Joe Doe",
+        "email": "joedoe@example.com",
+        "password": "secret12345"
+
+    }
+    </code></pre>
+- Signin user
+    <pre><code>POST /api/v1/auth/signin:</code><pre>
+    <pre><code>
+    headers = {content_type:application/json}
+
+    {
+        "email": "joedoe@example.com",
+        "password": "secret12345"
+    }
+    </code></pre>
+- Post a question
+    <pre><code>POST /api/v1/questions:</code><pre>
+    <pre><code>
+    headers = {content_type:application/json}
+
+    {
+        "question": "What is flask",
+        "Date posted": "12 August 2018",
+        
+    }
+    </code></pre>
+- View all question
+    <pre><code>GET /api/v1/questions:</code></pre>
+    <pre><code>
+    headers = {content_type:application/json}
+    </code></pre>
+- View a single question
+    <pre><code>GET /api/v1/questions/1:</code><pre>
+    <pre><code>
+    headers = {content_type:application/json}
+    </code></pre>
+- edit a question
+    <pre><code>PUT /api/v1/questions/1:</code><pre>
+    <pre><code>
+    headers = {content_type:application/json}
+    {
+        "Question": "What is flask",
+        "Date modified": "14th August 2018"
+    }
+    </code></pre>
+- Delete a question
+    <pre><code>DELETE /api/v1/questions/1:</code><pre>
+    <pre><code>
+    headers = {content_type:application/json}
+    </code></pre>
+- Post an answer to a question
+    <pre>code>POST /api/v1/questions/1/answers:</code></pre>
+    <pre><code>
+    headers = {content_type:application/json}
+    {
+        "Answer": "Flask is python framework",
+        "Date posted": "14th August 2018"
+    }
+    </code></pre>
 # Resources
 The API is hosted on [Heroku](https://stackoverflowlite-app.herokuapp.com/api/v1/questions)
 # Authors

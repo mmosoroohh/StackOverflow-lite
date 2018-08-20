@@ -21,3 +21,5 @@ class User(object):
         self.name = name
         self.email = email
         self.password = password
+
+        

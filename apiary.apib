@@ -1,0 +1,288 @@
+FORMAT: 1A
+HOST: http://1270.0.1:5000/api/v2/auth/signup/
+
+# StackOverflow-lite
+
+
+## Project Overview [/questions]
+StackOverflow-lite App is a platform where people can ask questions and provide answers. 
+
+## Required Features
+1. Users can create an account and log in.
+2. The users should be able to post a question
+3. The users should be able to view all questions.
+4. The users should be able to view a single question.
+5. The user should be able to view edit a single a question
+6. The user should be able to delete a question.
+7. The user should be able to post an answer to a question.
+8. The user should be able to mark an answer as preferred.
+
+Making API calls will require the following header
+
++ Content-Type: application/json
+
+After authentication, the rest of the endpoints will require to include the bearer token that is sent with the login reponse.
+
+Authentication: Bearer [Token]
+
+
+## Register a User [/users/signup]
+
+### Sign Up [POST]
+Where a user can register his/her credentials on the API
+
++ Request (application/json)
+
+        {
+            "name": "Arnold Osoro",
+            "email": "arnoldmaengwe@gmail.com",
+            "password": "$$$$"
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            user: 
+
+    + Body
+
+            {
+                "message": "New user registered!"
+            }
+            
+## Login [/users/signin]
+
+#### Sign in[POST]
+The user can  login with their username and password
+
++ Request (application/json)
+        
+        {
+            "email": "arnoldmaengwe@gmail.com",
+            "password": "$$$$"
+        }
+        
++ Response 200 (application/json)
+        {
+            "message": "Logged in successfully!",
+            "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mjg1NTAzMjgsIm5iZiI6MTUyODU1MDMyOCwianRpIjoiOTI5MWM1OGUtZGIzYy00ODczLWI0MWUtYWE5NjdhZDdhNGYxIiwiZXhwIjoxNTI4NTUxMjI4LCJpZGVudGl0eSI6ImJyeW8iLCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.rKyae63Dyw_Ta-9ZblOyY7qgrnEQNy0-aTSVmu0rBKs"
+        }
+        
+## User StackOverflow-lite [/users/questions]
+
+#### Post a question [POST]
+
+The registered user can post a question.
+
++ Request (application/json)
+        
+        {
+            "question": "Espon Printer",
+            "date_posted": "12th August 2018"
+        }
+        
++ Response 201 (application/json)
+        
+        {
+            "Questions": {
+                "question": "What is a flask restuful API",
+                "date_posted": "12th August 2018"
+                "id": 0,
+                "user_id": 1
+            }
+        }
+        
+### Get all questions[GET]
+A user can be able to view all his/her questions on the API.
++ Response 200 (application/json)
+        
+        {
+            "Questions": [
+                {
+                    "question": "What is a flask restful api",
+                    "date_posted": "12th August 2018",
+                    "description": "Missing power cable",
+                    "id": 0,
+                    "user_id": 1
+                }
+            ]
+        }
+        
+### User can get a single R [GET]
+A user can view a particular request's details he/she posted on the API.
+
++ Parameters
+    + request_id(integer) - Id of the request the user wants to get details.
+
++ Response 200 (application/json)
+
+        {
+            "request": {
+                "category": "maintenance",
+                "department": "Administrator",
+                "description": "Missing power cable",
+                "id": 14,
+                "name": "Espon Printer",
+                "status": "pending",
+                "user_id": 7
+            }
+        }
+        
+
+### User can Modify a Request [PUT]
+A user can modify a particular request which he/she posted on the API.
+
++ Parameters
+    + request_id (integer) - Id of the request the user wants to edit/modify.
+    
+
++ Request (application/json)
+
+        {
+            "name": "Espon Printer",
+            "description": "low cartridge", 
+            "category": "maintenance", 
+            "department": "Administrator"
+        }
+        
++ Response 201 (application/json)
+
+        {
+            "requests": {
+                "category": "maintenance",
+                "department": "Administrator",
+                "description": "low cartridge",
+                "id": 14,
+                "name": "Espon Printer",
+                "status": "pending",
+                "user_id": 7
+            }
+        }
+
+### User can delete a Request [DELETE]
+The user can delete a particular request he/she posted on the API.
+
++ Parameters
+    + request_id(integer) - The ID of the request the user can delete a request.
+
++ Response 200 (application/json)
+    
+        {
+            "message": "Request has been deleted!"
+        }
+
+
+## Admin Maintenance Tracker Requests [/admin/requests/]
+
+### Get all Requests[GET]
+
+The admin can get all available requests for all the users.
+
++ Response 200 (application/json)
+        
+        {
+            "Requests": [
+                {
+                    "category": "maintenance",
+                    "department": "IT",
+                    "description": "Needs Anti-virus",
+                    "id": 3,
+                    "name": "HP laptop",
+                    "status": "pending",
+                    "user_id": 2
+                },
+                {
+                    "category": "maintenance",
+                    "department": "IT",
+                    "description": "Needs Anti-virus",
+                    "id": 4,
+                    "name": "HP laptop",
+                    "status": "pending",
+                    "user_id": 2
+                },
+                {
+                    "category": "maintenance",
+                    "department": "IT",
+                    "description": "Needs Anti-virus",
+                    "id": 5,
+                    "name": "HP laptop",
+                    "status": "pending",
+                    "user_id": 2
+                },
+                {
+                    "category": "maintenance",
+                    "department": "IT",
+                    "description": "Needs Anti-virus",
+                    "id": 6,
+                    "name": "HP laptop",
+                    "status": "pending",
+                    "user_id": 2
+                },
+                {
+                    "category": "maintenance",
+                    "department": "IT",
+                    "description": "Needs Anti-virus",
+                    "id": 7,
+                    "name": "HP laptop",
+                    "status": "pending",
+                    "user_id": 2
+                },
+                {
+                    "category": "maintenance",
+                    "department": "IT",
+                    "description": "Needs Anti-virus",
+                    "id": 8,
+                    "name": "HP laptop",
+                    "status": "pending",
+                    "user_id": 2
+                },
+                {
+                    "category": "repair",
+                    "department": "Medical",
+                    "description": "Missing power unit",
+                    "id": 12,
+                    "name": "Computer CPU",
+                    "status": "pending",
+                    "user_id": 6
+                },
+                {
+                    "category": "repair",
+                    "department": "Medical",
+                    "description": "Missing power unit",
+                    "id": 13,
+                    "name": "Computer CPU",
+                    "status": "pending",
+                    "user_id": 6
+                }
+            ]
+        }
+        
+## Admin Update / View a Request [/admin/requests/<int: id>]
+Admin can view and update a particualr request's details on it's status.
++ Parameters
+    + request_id (integer) - The ID of the request the admin would like to update it's status.
+    
+### Change Request Status[PUT]
++ Parameters
+    + request_id(integer) - ID o the request the admin want modify the status of a request.
+
++ Request (application/json)
+        
+        {
+            "status": "Approved"
+        }
+        
++ Response 200 (application/json)
+
+        {
+             "Requests": {
+                    "category": "maintenance",
+                    "department": "Administrator",
+                    "description": "low cartridge",
+                    "id": 14,
+                    "name": "Espon Printer",
+                    "status": "Approved",
+                    "user_id": 7
+            }
+        }

@@ -1,21 +1,23 @@
 FORMAT: 1A
-HOST: http://1270.0.1:5000/api/v2/auth/signup/
+HOST: http://polls.apiblueprint.org/
 
-# StackOverflow-lite
+# StackOverflow-lite 
+
 
 
 ## Project Overview [/questions]
-StackOverflow-lite App is a platform where people can ask questions and provide answers. 
+StackOverflow-lite App is a platform where people can ask questions and provide answers.
 
 ## Required Features
 1. Users can create an account and log in.
 2. The users should be able to post a question
 3. The users should be able to view all questions.
 4. The users should be able to view a single question.
-5. The user should be able to view edit a single a question
+5. The user should be able to edit a single a question
 6. The user should be able to delete a question.
 7. The user should be able to post an answer to a question.
 8. The user should be able to mark an answer as preferred.
+
 
 Making API calls will require the following header
 
@@ -25,10 +27,10 @@ After authentication, the rest of the endpoints will require to include the bear
 
 Authentication: Bearer [Token]
 
-
 ## Register a User [/users/signup]
 
 ### Sign Up [POST]
+
 Where a user can register his/her credentials on the API
 
 + Request (application/json)
@@ -51,10 +53,11 @@ Where a user can register his/her credentials on the API
                 "message": "New user registered!"
             }
             
-## Login [/users/signin]
+## Login a User [/users/signin]
 
-#### Sign in[POST]
-The user can  login with their username and password
+### Sign In [POST]
+
+The user can  login with their email and password
 
 + Request (application/json)
         
@@ -69,17 +72,17 @@ The user can  login with their username and password
             "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mjg1NTAzMjgsIm5iZiI6MTUyODU1MDMyOCwianRpIjoiOTI5MWM1OGUtZGIzYy00ODczLWI0MWUtYWE5NjdhZDdhNGYxIiwiZXhwIjoxNTI4NTUxMjI4LCJpZGVudGl0eSI6ImJyeW8iLCJmcmVzaCI6ZmFsc2UsInR5cGUiOiJhY2Nlc3MifQ.rKyae63Dyw_Ta-9ZblOyY7qgrnEQNy0-aTSVmu0rBKs"
         }
         
+        
 ## User StackOverflow-lite [/users/questions]
 
-#### Post a question [POST]
+#### User can post a question [POST]
 
 The registered user can post a question.
 
 + Request (application/json)
         
         {
-            "question": "Espon Printer",
-            "date_posted": "12th August 2018"
+            "question": "What is a flask restful API"
         }
         
 + Response 201 (application/json)
@@ -87,202 +90,113 @@ The registered user can post a question.
         {
             "Questions": {
                 "question": "What is a flask restuful API",
-                "date_posted": "12th August 2018"
+                "date_posted": "Wed, 22 Aug 2018 17:40:24 GMT"
                 "id": 0,
                 "user_id": 1
             }
         }
-        
-### Get all questions[GET]
+
+### User can get all questions [GET]
+
 A user can be able to view all his/her questions on the API.
+
 + Response 200 (application/json)
         
         {
             "Questions": [
                 {
+                    "date_posted": "Wed, 22 Aug 2018 17:40:24 GMT",
+                    "id": 9,
                     "question": "What is a flask restful api",
-                    "date_posted": "12th August 2018",
-                    "description": "Missing power cable",
-                    "id": 0,
-                    "user_id": 1
+                    "user_id": 11
                 }
             ]
         }
-        
-### User can get a single R [GET]
-A user can view a particular request's details he/she posted on the API.
+
+### User can get a single question [GET]
+
+A user can view a particular question's details he/she posted on the API.
 
 + Parameters
-    + request_id(integer) - Id of the request the user wants to get details.
+    + question_id(integer) - Id of the question the user wants to get details.
 
 + Response 200 (application/json)
 
         {
-            "request": {
-                "category": "maintenance",
-                "department": "Administrator",
-                "description": "Missing power cable",
-                "id": 14,
-                "name": "Espon Printer",
-                "status": "pending",
-                "user_id": 7
-            }
+            "Questions": [
+                {
+                    "date_posted": "Wed, 22 Aug 2018 17:40:24 GMT",
+                    "id": 9,
+                    "question": "What is a flask restful api",
+                    "user_id": 11
+                }
+            ]
         }
-        
 
-### User can Modify a Request [PUT]
-A user can modify a particular request which he/she posted on the API.
+### User can Modify a question [PUT]
+
+A user can modify a particular question which he/she posted on the API.
 
 + Parameters
-    + request_id (integer) - Id of the request the user wants to edit/modify.
+    + question_id (integer) - Id of the question the user wants to edit/modify.
     
 
 + Request (application/json)
 
         {
-            "name": "Espon Printer",
-            "description": "low cartridge", 
-            "category": "maintenance", 
-            "department": "Administrator"
+            "question": "What is a Django in python"
         }
         
 + Response 201 (application/json)
-
+        
         {
-            "requests": {
-                "category": "maintenance",
-                "department": "Administrator",
-                "description": "low cartridge",
-                "id": 14,
-                "name": "Espon Printer",
-                "status": "pending",
-                "user_id": 7
+            "Questions": {
+                "date_posted": "Wed, 22 Aug 2018 23:58:29 GMT",
+                "id": 9,
+                "question": [
+                    "What is Django in python"
+                ],
+                "user_id": 11
             }
         }
+        
 
 ### User can delete a Request [DELETE]
-The user can delete a particular request he/she posted on the API.
+
+The user can delete a particular question he/she posted on the API.
 
 + Parameters
-    + request_id(integer) - The ID of the request the user can delete a request.
+    + question_id(integer) - The ID of the question the user can delete a question.
+    
 
 + Response 200 (application/json)
     
         {
-            "message": "Request has been deleted!"
+            "message": "Question has been deleted!"
         }
 
 
-## Admin Maintenance Tracker Requests [/admin/requests/]
+### User can answer a question [POST]
 
-### Get all Requests[GET]
+A registered User can answer a question on the API.
 
-The admin can get all available requests for all the users.
-
-+ Response 200 (application/json)
-        
-        {
-            "Requests": [
-                {
-                    "category": "maintenance",
-                    "department": "IT",
-                    "description": "Needs Anti-virus",
-                    "id": 3,
-                    "name": "HP laptop",
-                    "status": "pending",
-                    "user_id": 2
-                },
-                {
-                    "category": "maintenance",
-                    "department": "IT",
-                    "description": "Needs Anti-virus",
-                    "id": 4,
-                    "name": "HP laptop",
-                    "status": "pending",
-                    "user_id": 2
-                },
-                {
-                    "category": "maintenance",
-                    "department": "IT",
-                    "description": "Needs Anti-virus",
-                    "id": 5,
-                    "name": "HP laptop",
-                    "status": "pending",
-                    "user_id": 2
-                },
-                {
-                    "category": "maintenance",
-                    "department": "IT",
-                    "description": "Needs Anti-virus",
-                    "id": 6,
-                    "name": "HP laptop",
-                    "status": "pending",
-                    "user_id": 2
-                },
-                {
-                    "category": "maintenance",
-                    "department": "IT",
-                    "description": "Needs Anti-virus",
-                    "id": 7,
-                    "name": "HP laptop",
-                    "status": "pending",
-                    "user_id": 2
-                },
-                {
-                    "category": "maintenance",
-                    "department": "IT",
-                    "description": "Needs Anti-virus",
-                    "id": 8,
-                    "name": "HP laptop",
-                    "status": "pending",
-                    "user_id": 2
-                },
-                {
-                    "category": "repair",
-                    "department": "Medical",
-                    "description": "Missing power unit",
-                    "id": 12,
-                    "name": "Computer CPU",
-                    "status": "pending",
-                    "user_id": 6
-                },
-                {
-                    "category": "repair",
-                    "department": "Medical",
-                    "description": "Missing power unit",
-                    "id": 13,
-                    "name": "Computer CPU",
-                    "status": "pending",
-                    "user_id": 6
-                }
-            ]
-        }
-        
-## Admin Update / View a Request [/admin/requests/<int: id>]
-Admin can view and update a particualr request's details on it's status.
 + Parameters
-    + request_id (integer) - The ID of the request the admin would like to update it's status.
+    + question_id(integer) - The ID of the question the user can post an answer.
     
-### Change Request Status[PUT]
-+ Parameters
-    + request_id(integer) - ID o the request the admin want modify the status of a request.
-
+    
 + Request (application/json)
         
         {
-            "status": "Approved"
+            "answer": "Django is a python framework"
         }
-        
-+ Response 200 (application/json)
 
++ Response 201 (application/json)
+        
         {
-             "Requests": {
-                    "category": "maintenance",
-                    "department": "Administrator",
-                    "description": "low cartridge",
-                    "id": 14,
-                    "name": "Espon Printer",
-                    "status": "Approved",
-                    "user_id": 7
+            "Answers": {
+                "answer": "Django is a python framework",
+                "date_posted": "Thu, 23 Aug 2018 00:09:39 GMT",
+                "id": 0,
+                "question_id": 9
             }
         }

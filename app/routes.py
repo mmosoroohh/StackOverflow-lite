@@ -82,9 +82,9 @@ def single_question(id):
 
     return jsonify({'Questions': question}), 200
 
-@web.route('/api/v1/questions/<int:id>', methods=['PUT'])
+@web.route('/api/v2/users/questions/<int:id>', methods=['PUT'])
 @jwt_required
-def modidy_question(id):
+def modify_question(id):
     email = get_jwt_identity()
     user = get_user(email)
     # Edit a specific question 
@@ -94,15 +94,15 @@ def modidy_question(id):
         return jsonify({'message': 'Question not available'})
 
     edit['question'] = request.json.get('question'),
-    edit['date_posted'] = request.json.get('date_posted')
+    edit['date_posted'] = datetime.now()
 
     edit_question(id, edit)
 
     return jsonify({'Questions': edit}), 200
 
-@web.route('/api/v1/questions/<int:id>', methods=['DELETE'])
+@web.route('/api/v2/users/questions/<int:id>', methods=['DELETE'])
 @jwt_required
-def delete_question(id):
+def remove_question(id):
     email = get_jwt_identity()
     user = get_user(email)
     # Delete a specific question 
@@ -113,7 +113,7 @@ def delete_question(id):
     delete_question(id)
     return jsonify({'message': 'Question has been deleted!'}), 200
 
-@web.route('/api/v1/users/questions/<int:id>/answers', methods=['POST'])
+@web.route('/api/v2/users/questions/<int:id>/answers', methods=['POST'])
 @jwt_required
 def answer_question(id):
     # retrive a question by it's ID

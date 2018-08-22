@@ -46,10 +46,13 @@ Install package requirements to your environment
 Create a.env file in your StackOverflow-lite root directory and add:
 <pre><code>
 $ . venv/bin/activate
-$ export FLASK_APP="run.py"
-$ export SECRET="any-character-or-STRING-YOU-PREFER"
-$ export APP_SETTINGS="development"
+$ source .env
 </code></pre>
+
+# Database integration
+Create a Database on PostgreSQL:
+- stackoverflow_lite (development DB)
+- test_stackoverflow (testing DB)
 
 # Testing
 To set up testing environment
@@ -69,38 +72,57 @@ $ nosetests --with-coverage
 <th>HTTP-Verbs</th>
 </tr>
 <tr>
+<td>SignUp a user</td>
+<td>/api/v2/auth/signup</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>SignIn a user</td>
+<td>/api/v2/auth/signin</td>
+<td>POST</td>
+</tr>
+<tr>
 <td>Post a question</td>
-<td>/api/v1/questions</td>
+<td>/api/v2/users/questions</td>
 <td>POST</td>
 </tr>
 <tr>
 <td>Fetch all question</td>
-<td>/api/v1/questions</td>
+<td>/api/v2/users/questions</td>
 <td>GET</td>
 </tr>
 <tr>
 <td>Fetch a single question</td>
-<td>/api/v1/questions/question_id</td>
+<td>/api/v2/users/questions/question_id</td>
 <td>GET</td>
 </tr>
 <tr>
 <td>Edit a specific question</td>
-<td>/api/v1/questions/question_id</td>
+<td>/api/v2/users/questions/question_id</td>
 <td>PUT</td>
 </tr>
 <tr>
 <td>Delete a question</td>
-<td>/api/v1/questions/questions_id</td>
+<td>/api/v2/users/questions/questions_id</td>
 <td>DELETE</td>
 </tr>
 <tr>
 <td>Post answer to a question</td>
-<td>/api/v1/questions/question_id/answers</td>
+<td>/api/v2/users/questions/question_id/answers</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>User sign out</td>
+<td>/api/v2/auth/signout</td>
 <td>POST</td>
 </tr>
 </tr>
 </table>
 </pre>
+
+# Resources and Documentation
+## API Documentation
+The API documentation can be accessed from [Apiary](https://stackoverflowlite5.docs.apiary.io)
 
 # Authors
 - Arnold M. Osoro - [mmosoroohh](https://github.com/mmosoroohh)

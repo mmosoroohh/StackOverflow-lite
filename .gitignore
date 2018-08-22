@@ -6,4 +6,5 @@ config.pyc
 test_questions.pyc
 .pytest_cache
 app.pyc
+.env
 

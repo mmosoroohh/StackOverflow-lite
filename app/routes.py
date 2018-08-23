@@ -127,3 +127,8 @@ def answer_question(id):
     answers.save()
     return jsonify({'Answers': answers.__dict__}), 201
 
+@web.route('/api/v2/auth/signout', methods=['POST'])
+@jwt_required
+def signout():
+    # Log out a sign in user
+    return jsonify({'message': 'Logged out successfully!'})

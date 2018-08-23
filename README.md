@@ -1,11 +1,5 @@
-<<<<<<< HEAD
-# StackOverflow-lite    [![Build Status](https://travis-ci.org/mmosoroohh/StackOverflow-lite.svg?branch=challenge3)](https://travis-ci.org/mmosoroohh/StackOverflow-lite)   [![Coverage Status](https://coveralls.io/repos/github/mmosoroohh/StackOverflow-lite/badge.svg?branch=challenge3)](https://coveralls.io/github/mmosoroohh/StackOverflow-lite?branch=challenge3)(https://coveralls.io/github/mmosoroohh/StackOverflow-lite?branch=challenge3)   [![Maintainability](https://api.codeclimate.com/v1/badges/39632655bf578a5b3aa2/maintainability)](https://codeclimate.com/github/mmosoroohh/StackOverflow-lite/maintainability)   [![Test Coverage](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/test_coverage)](https://codeclimate.com/github/codeclimate/codeclimate/test_coverage)
-=======
 # StackOverflow-lite    [![Build Status](https://travis-ci.org/mmosoroohh/StackOverflow-lite.svg?branch=challenge3)](https://travis-ci.org/mmosoroohh/StackOverflow-lite)   [![Coverage Status](https://coveralls.io/repos/github/mmosoroohh/StackOverflow-lite/badge.svg?branch=challenge3)](https://coveralls.io/github/mmosoroohh/StackOverflow-lite?branch=challenge3)   [![Maintainability](https://api.codeclimate.com/v1/badges/39632655bf578a5b3aa2/maintainability)](https://codeclimate.com/github/mmosoroohh/StackOverflow-lite/maintainability)   [![Test Coverage](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/test_coverage)](https://codeclimate.com/github/codeclimate/codeclimate/test_coverage)
->>>>>>> 169acd22de657bc75cc6e48c74a3581ab1e1b2cd
 StackOverflow-lite is a platform where people can ask questions and provide answers.
-
-
 
 # Usage
 - Home page

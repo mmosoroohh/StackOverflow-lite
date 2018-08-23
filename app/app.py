@@ -1,4 +1,5 @@
 from flask_api import FlaskAPI
+from flask import Flask, jsonify
 from flask_jwt_extended import JWTManager
 from app.database import Database
 db = Database()
@@ -17,5 +18,17 @@ def create_app(config_name):
 
     from app import routes
     app.register_blueprint(routes.web, url_prefix="/")
+
+    @app.errorhandler(404)
+    def page_not_found(error):
+        return jsonify("The resource does not exist"), 404
+
+    @app.errorhandler(500)
+    def internal_server_error(error):
+        return jsonify("Encountering an internal error with our server!"), 500
+
+    @app.errorhandler(403)
+    def forbidden(error):
+        return jsonify("You do not permission to access this resource"), 403
 
     return app

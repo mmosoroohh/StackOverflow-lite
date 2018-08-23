@@ -41,8 +41,6 @@ def signin():
     return make_response('Your account does not exist!, Please Register!'), 401
 
 
-
-
 @web.route('/api/v2/users/questions', methods=['POST'])
 @jwt_required
 def question():
@@ -122,8 +120,8 @@ def answer_question(id):
     # Answer a specific question
     answers = Answer(
         answer = request.json.get("answer"),
-        date_posted = request.json.get("date_posted"),
-        question_id = (question["id"]))
+        date_posted = datetime.now(),
+        question_id = question['id'])
     answers.save()
     return jsonify({'Answers': answers.__dict__}), 201
 
@@ -132,3 +130,4 @@ def answer_question(id):
 def signout():
     # Log out a sign in user
     return jsonify({'message': 'Logged out successfully!'})
+

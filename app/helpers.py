@@ -8,11 +8,12 @@ cur = db.cursor
 
 
 def insert_user(users):
-    cur.execute("INSERT INTO USERS(name, email, password) values(%s,%s,%s)",(
+    cur.execute("INSERT INTO USERS(name, email, password) values(%s,%s,%s) returning id",(
         users.name,
         users.email,
         users.password))
     conn.commit()
+    return cur.fetchone().get('id')
 
 
 def get_user(email):
@@ -25,10 +26,11 @@ def get_user(email):
     
 
 def post_question(questions):
-    cur.execute("INSERT INTO questions (question, date_posted, user_id) values(%s,now(),%s)",(
+    cur.execute("INSERT INTO questions (question, date_posted, user_id) values(%s,now(),%s) returning id",(
         questions.question,
         questions.user_id))
     conn.commit()
+    return cur.fetchone().get('id')
 
 def get_questions(user_id):
     cur.execute("SELECT * FROM QUESTIONS WHERE user_id =%s",(user_id,))
@@ -62,11 +64,12 @@ def delete_question(id):
     conn.commit()
 
 def answer_question(answers):
-    cur.execute("INSERT INTO ANSWERS (answer, date_posted, question_id) values(%s,%s,%s)",(
+    cur.execute("INSERT INTO ANSWERS (answer, date_posted, question_id) values(%s,%s,%s) returning id",(
         answers.answer,
         answers.date_posted,
         answers.question_id))
     conn.commit()
+    return cur.fetchone().get('id')
 
 def drop_everything(self):
     self.cur.execute("DROP TABLE users;")

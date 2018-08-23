@@ -13,6 +13,7 @@ class StackOverflow_lite(unittest.TestCase):
     def setUp(self):
         """Define test variables and initialize app."""
         self.app = create_app(config_name="testing")
+
         migrate()
         self.client = self.app.test_client()
         self.questions = {'question': 'What is flask restful api'}
@@ -85,7 +86,6 @@ class StackOverflow_lite(unittest.TestCase):
             '/api/v2/users/questions/1', data=json.dumps(self.questions), headers=self.authHeaders)
         
         self.assertEqual(response.status_code, 200)
-
 
 
     def tearDown(self):

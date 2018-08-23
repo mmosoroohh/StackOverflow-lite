@@ -25,7 +25,7 @@ class Questions(object):
         self.user_id = user_id
 
     def save(self):
-        helpers.post_question(self)
+        self.id = helpers.post_question(self)
 
 
 class Answer(object):

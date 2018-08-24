@@ -5,7 +5,7 @@ from flask_jwt_extended import (jwt_required, create_access_token, get_jwt_ident
 
 from passlib.handlers.bcrypt import bcrypt
 from datetime import datetime
-from app.helpers import insert_user, get_user, post_question, get_questions, get_question, edit_question, delete_question, get_answer, get_answers, mark_answer
+from app.helpers import insert_user, get_user, post_question, get_questions, get_question, edit_question, delete_question
 from app.models import User, Questions, Answer
 
 web = Blueprint("web",__name__)

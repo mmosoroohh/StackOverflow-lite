@@ -5,6 +5,7 @@ class Config(object):
     DEBUG = False
     CSRF_ENABLED = True
     DATABASE_NAME = 'stackoverflow_lite'
+    
 
 class DevelopmentConfig(Config):
     """Configuration fro Development."""

@@ -5,7 +5,7 @@ from flask_jwt_extended import (jwt_required, create_access_token, get_jwt_ident
 
 from passlib.handlers.bcrypt import bcrypt
 from datetime import datetime
-from app.helpers import insert_user, get_user, post_question, get_questions, get_question, edit_question, delete_question, get_answer, mark_answer
+from app.helpers import insert_user, get_user, post_question, get_questions, get_question, edit_question, delete_question, get_answer, get_answers, mark_answer
 from app.models import User, Questions, Answer
 
 web = Blueprint("web",__name__)
@@ -125,15 +125,27 @@ def answer_question(id):
     answers.save()
     return jsonify({'Answers': answers.__dict__}), 201
 
+# @web.route('/api/v2/answers', methods=['GET'])
+# @jwt_required
+# def view_all_answers():
+#     email = get_jwt_identity()
+#     user = get_answers(email)
+
+#     answers = get_answers(user['id'])
+#     if answers is None:
+#         return jsonify({'message': 'Answers not found!'})
+
+#     return jsonify({'Answers': answers})
+
 # @web.route('/api/v2/answers/<int:id>', methods=['PUT'])
 # @jwt_required
-# def preffered_answer(id):
+# def prefered_answer(id):
 #     # retrieve a answer by it'd ID
 #     email = get_jwt_identity()
-#     answer = get_answer(id)
+#     user = get_user(email)
 
 #     # Mark a specific answer
-#     mark = get_answer(id)
+#     mark = get_answer(user['id'])
 
 #     if mark is None:
 #         return jsonify({'message': 'Answer not available'})

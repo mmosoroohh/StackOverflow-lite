@@ -119,9 +119,9 @@ $ nosetests --with-coverage
 </pre>
 
 # Resources and Documentation
-## API Documentation
-The API documentation can be accessed from [Apiary](https://stackoverflowlite5.docs.apiary.io)
-Hosted the API on [Heroku](https://stackoverflow-lite-v2.herokuapp.com)
+## API Documentation and Resource
+- The API documentation can be accessed from [Apiary](https://stackoverflowlite5.docs.apiary.io)
+- Hosted the API on [Heroku](https://stackoverflow-lite-v2.herokuapp.com)
 
 # Authors
 - Arnold M. Osoro - [mmosoroohh](https://github.com/mmosoroohh)

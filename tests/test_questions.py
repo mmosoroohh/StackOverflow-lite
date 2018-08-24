@@ -18,7 +18,7 @@ class StackOverflow_lite(unittest.TestCase):
         self.client = self.app.test_client()
         self.questions = {'question': 'What is flask restful api'}
         self.questions_1 = {'question': 'What is a flask framework'}
-        self.answers = {'Answer': 'flask restful is a python framework', 'Date posted': '14th August 2018'}
+        self.answers = {'Answer': 'flask restful is a python framework', 'Date posted': '14th August 2018', 'status': 'pending'}
 
 
         self.user = {'name': 'Arnold Osoro', 'email': 'arnoldmaengwe@gmail.com', 'password': '12345'}
@@ -41,49 +41,49 @@ class StackOverflow_lite(unittest.TestCase):
     def test_post_question(self):
         """Test posting a question."""
         response = self.client.post(
-            '/api/v2/users/questions', data=json.dumps(self.questions), headers=self.authHeaders)
+            '/api/v2/questions', data=json.dumps(self.questions), headers=self.authHeaders)
 
         self.assertEqual(response.status_code, 201)
 
     def test_get_all_questions(self):
         """Test user view all questions."""
         response = self.client.get(
-            '/api/v2/users/questions', data=json.dumps(self.questions), headers=self.authHeaders)
+            '/api/v2/questions', data=json.dumps(self.questions), headers=self.authHeaders)
 
         self.assertEqual(response.status_code, 200)
 
     def test_view_single_question(self):
         """Test user view a single question."""
         response = self.client.get(
-            '/api/v2/users/questions/1', data=json.dumps(self.questions), headers=self.authHeaders)
+            '/api/v2/questions/1', data=json.dumps(self.questions), headers=self.authHeaders)
 
         self.assertEqual(response.status_code, 200)
 
     def test_edit_question(self):
         """Test user can edit a question."""
         response = self.client.post(
-            '/api/v2/users/questions', data=json.dumps(self.questions), headers=self.authHeaders)
+            '/api/v2/questions', data=json.dumps(self.questions), headers=self.authHeaders)
         self.assertEqual(response.status_code, 201)  
 
         response = self.client.put(
-            '/api/v2/users/questions/1', data=json.dumps(self.questions_1), headers=self.authHeaders)
+            '/api/v2/questions/1', data=json.dumps(self.questions_1), headers=self.authHeaders)
 
         self.assertEqual(response.status_code, 200)
 
         response = self.client.get(
-            '/api/v2/users/questions/1', data=json.dumps(self.questions), headers=self.authHeaders)
+            '/api/v2/questions/1', data=json.dumps(self.questions), headers=self.authHeaders)
 
         self.assertEqual(response.status_code, 200)
 
     def test_delete_question(self):
         """Test user can delete a question."""
         response = self.client.get(
-            '/api/v2/users/questions/1', data=json.dumps(self.questions), headers=self.authHeaders)
+            '/api/v2/questions/1', data=json.dumps(self.questions), headers=self.authHeaders)
         
         self.assertEqual(response.status_code, 200)
 
         response = self.client.delete(
-            '/api/v2/users/questions/1', data=json.dumps(self.questions), headers=self.authHeaders)
+            '/api/v2/questions/1', data=json.dumps(self.questions), headers=self.authHeaders)
         
         self.assertEqual(response.status_code, 200)
 

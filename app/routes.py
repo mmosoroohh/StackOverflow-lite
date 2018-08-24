@@ -5,7 +5,7 @@ from flask_jwt_extended import (jwt_required, create_access_token, get_jwt_ident
 
 from passlib.handlers.bcrypt import bcrypt
 from datetime import datetime
-from app.helpers import insert_user, get_user, post_question, get_questions, get_question, edit_question, delete_question
+from app.helpers import insert_user, get_user, post_question, get_questions, get_question, edit_question, delete_question, get_answer, mark_answer
 from app.models import User, Questions, Answer
 
 web = Blueprint("web",__name__)
@@ -41,7 +41,7 @@ def signin():
     return make_response('Your account does not exist!, Please Register!'), 401
 
 
-@web.route('/api/v2/users/questions', methods=['POST'])
+@web.route('/api/v2/questions', methods=['POST'])
 @jwt_required
 def question():
 
@@ -55,7 +55,7 @@ def question():
     question.save()
     return jsonify({'Questions': question.__dict__}), 201
 
-@web.route('/api/v2/users/questions', methods=['GET'])
+@web.route('/api/v2/questions', methods=['GET'])
 @jwt_required
 def view_all_questions():
     email = get_jwt_identity()
@@ -67,7 +67,7 @@ def view_all_questions():
         return jsonify({'message': 'No questions found'})
     return jsonify({'Questions': questions}), 200
 
-@web.route('/api/v2/users/questions/<int:id>', methods=['GET'])
+@web.route('/api/v2/questions/<int:id>', methods=['GET'])
 @jwt_required
 def single_question(id):
     email = get_jwt_identity()
@@ -80,7 +80,7 @@ def single_question(id):
 
     return jsonify({'Questions': question}), 200
 
-@web.route('/api/v2/users/questions/<int:id>', methods=['PUT'])
+@web.route('/api/v2/questions/<int:id>', methods=['PUT'])
 @jwt_required
 def modify_question(id):
     email = get_jwt_identity()
@@ -98,7 +98,7 @@ def modify_question(id):
 
     return jsonify({'Questions': edit}), 200
 
-@web.route('/api/v2/users/questions/<int:id>', methods=['DELETE'])
+@web.route('/api/v2/questions/<int:id>', methods=['DELETE'])
 @jwt_required
 def remove_question(id):
     email = get_jwt_identity()
@@ -111,7 +111,7 @@ def remove_question(id):
     delete_question(id)
     return jsonify({'message': 'Question has been deleted!'}), 200
 
-@web.route('/api/v2/users/questions/<int:id>/answers', methods=['POST'])
+@web.route('/api/v2/questions/<int:id>/answers', methods=['POST'])
 @jwt_required
 def answer_question(id):
     # retrive a question by it's ID
@@ -124,6 +124,27 @@ def answer_question(id):
         question_id = question['id'])
     answers.save()
     return jsonify({'Answers': answers.__dict__}), 201
+
+# @web.route('/api/v2/answers/<int:id>', methods=['PUT'])
+# @jwt_required
+# def preffered_answer(id):
+#     # retrieve a answer by it'd ID
+#     email = get_jwt_identity()
+#     answer = get_answer(id)
+
+#     # Mark a specific answer
+#     mark = get_answer(id)
+
+#     if mark is None:
+#         return jsonify({'message': 'Answer not available'})
+
+#     mark['status'] = request.json.get('status'),
+#     mark['date_posted'] = datetime.now()
+
+#     edit_question(id, mark)
+
+#     return jsonify({'Answers': mark}), 200
+
 
 @web.route('/api/v2/auth/signout', methods=['POST'])
 @jwt_required

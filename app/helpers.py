@@ -64,12 +64,28 @@ def delete_question(id):
     conn.commit()
 
 def answer_question(answers):
-    cur.execute("INSERT INTO ANSWERS (answer, date_posted, question_id) values(%s,%s,%s) returning id",(
+    cur.execute("INSERT INTO ANSWERS (answer, date_posted, status, question_id) values(%s,%s,%s,%s) returning id",(
         answers.answer,
         answers.date_posted,
+        'pending',
         answers.question_id))
     conn.commit()
     return cur.fetchone().get('id')
+
+def get_answer(id):
+    cur.execute("SELECT * FROM ANSWERS WHERE id = %s", (id,))
+    answers = cur.fetchone()
+    if answers is None:
+        return None
+    conn.commit()
+    return answers
+
+def mark_answer(id, answers):
+    cur.execute("UPDATE ANSWERS SET status = %s WHERE id = %s", (
+        answers['status'],
+        answers['id']))
+    conn.commit()
+
 
 def drop_everything(self):
     self.cur.execute("DROP TABLE users;")

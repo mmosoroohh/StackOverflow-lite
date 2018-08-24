@@ -40,6 +40,7 @@ def migrate():
         id serial PRIMARY KEY, 
         answer varchar,
         date_posted TIMESTAMP,
+        status varchar,
         question_id INT,
         FOREIGN KEY (question_id) REFERENCES questions(id)
     );""")

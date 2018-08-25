@@ -4,13 +4,13 @@ class Config(object):
     """Parent configuration class."""
     DEBUG = False
     CSRF_ENABLED = True
-    DATABASE_NAME = 'stackoverflow_lite'
+    DATABASE_NAME = 'dbdmm4krnpn43'
     
 
 class DevelopmentConfig(Config):
     """Configuration fro Development."""
     DEBUG = True
-    DATABASE_NAME = 'stackoverflow_lite'
+    DATABASE_NAME = 'dbdmm4krnpn43'
     JWT_SECRET_KEY = "gvhbjnkmsjbknmlnjk"
 
 class TestingConfig(Config):

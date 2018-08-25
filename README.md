@@ -81,32 +81,32 @@ $ nosetests --with-coverage
 </tr>
 <tr>
 <td>Post a question</td>
-<td>/api/v2/users/questions</td>
+<td>/api/v2/questions</td>
 <td>POST</td>
 </tr>
 <tr>
 <td>Fetch all question</td>
-<td>/api/v2/users/questions</td>
+<td>/api/v2/questions</td>
 <td>GET</td>
 </tr>
 <tr>
 <td>Fetch a single question</td>
-<td>/api/v2/users/questions/question_id</td>
+<td>/api/v2/questions/question_id</td>
 <td>GET</td>
 </tr>
 <tr>
 <td>Edit a specific question</td>
-<td>/api/v2/users/questions/question_id</td>
+<td>/api/v2/questions/question_id</td>
 <td>PUT</td>
 </tr>
 <tr>
 <td>Delete a question</td>
-<td>/api/v2/users/questions/questions_id</td>
+<td>/api/v2/questions/questions_id</td>
 <td>DELETE</td>
 </tr>
 <tr>
 <td>Post answer to a question</td>
-<td>/api/v2/users/questions/question_id/answers</td>
+<td>/api/v2/questions/question_id/answers</td>
 <td>POST</td>
 </tr>
 <tr>

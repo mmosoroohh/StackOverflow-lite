@@ -5,8 +5,9 @@ from flask_jwt_extended import (jwt_required, create_access_token, get_jwt_ident
 
 from passlib.handlers.bcrypt import bcrypt
 from datetime import datetime
-from app.helpers import insert_user, get_user, post_question, get_questions, get_question, edit_question, delete_question
+from app.helpers import insert_user, get_user, post_question, get_questions, get_question, edit_question, delete_question, get_answer, get_answers, mark_answer
 from app.models import User, Questions, Answer
+
 
 web = Blueprint("web",__name__)
 
@@ -22,8 +23,6 @@ def signup_user():
     user.save()
 
     return jsonify({'message': 'New user registered!', 'User': user.__dict__})
-    if user == "./?><{!@#$%^&*(":
-        return jsonify({'message': 'User credentials required to register!'})
 
 @web.route('/api/v2/auth/signin', methods=['POST'])
 def signin():
@@ -74,7 +73,7 @@ def single_question(id):
     user = get_user(email)
 
     # retrive a question by it's ID
-    question = get_question(id)
+    question = get_question(user['id'])
     if question is None:
         return jsonify({'message': 'Question not available'})
 
@@ -86,7 +85,7 @@ def modify_question(id):
     email = get_jwt_identity()
     user = get_user(email)
     # Edit a specific question 
-    edit = get_question(id)
+    edit = get_question(user['id'])
 
     if edit is None:
         return jsonify({'message': 'Question not available'})
@@ -104,7 +103,7 @@ def remove_question(id):
     email = get_jwt_identity()
     user = get_user(email)
     # Delete a specific question 
-    question = get_question(id)
+    question = get_question(user['id'])
     if question is None:
         return jsonify({'message': 'Question not available'})
 
@@ -116,8 +115,11 @@ def remove_question(id):
 def answer_question(id):
     # retrive a question by it's ID
     email = get_jwt_identity()
-    question = get_question(id)
+    user = get_user(email)
+
     # Answer a specific question
+    question = get_question(user['id'])
+    
     answers = Answer(
         answer = request.json.get("answer"),
         date_posted = datetime.now(),
@@ -125,37 +127,39 @@ def answer_question(id):
     answers.save()
     return jsonify({'Answers': answers.__dict__}), 201
 
-# @web.route('/api/v2/answers', methods=['GET'])
-# @jwt_required
-# def view_all_answers():
-#     email = get_jwt_identity()
-#     user = get_answers(email)
+@web.route('/api/v2/answers', methods=['GET'])
+@jwt_required
+def view_all_answers():
+    email = get_jwt_identity()
+    user = get_user(email)
+    question = get_question(user['id'])
 
-#     answers = get_answers(user['id'])
-#     if answers is None:
-#         return jsonify({'message': 'Answers not found!'})
+    answers = get_answers(question['id'][0])
+    if answers is None:
+        return jsonify({'message': 'Answers not found!'})
 
-#     return jsonify({'Answers': answers})
+    return jsonify({'Answers': answers})
 
-# @web.route('/api/v2/answers/<int:id>', methods=['PUT'])
-# @jwt_required
-# def prefered_answer(id):
-#     # retrieve a answer by it'd ID
-#     email = get_jwt_identity()
-#     user = get_user(email)
+@web.route('/api/v2/answers/<int:id>', methods=['PUT'])
+@jwt_required
+def prefered_answer(id):
+    # retrieve a answer by it'd ID
+    email = get_jwt_identity()
+    user = get_user(email)
+    question = get_question(user['id'])
 
-#     # Mark a specific answer
-#     mark = get_answer(user['id'])
+    # Mark a specific answer
+    mark = get_answer(question['id'])
 
-#     if mark is None:
-#         return jsonify({'message': 'Answer not available'})
+    if mark is None:
+        return jsonify({'message': 'Answer not available'})
 
-#     mark['status'] = request.json.get('status'),
-#     mark['date_posted'] = datetime.now()
+    mark['status'] = request.json.get('status'),
+    mark['date_posted'] = datetime.now()
 
-#     edit_question(id, mark)
+    mark_answer(id, mark)
 
-#     return jsonify({'Answers': mark}), 200
+    return jsonify({'Answer': mark}), 200
 
 
 @web.route('/api/v2/auth/signout', methods=['POST'])

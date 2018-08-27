@@ -46,3 +46,5 @@ def migrate():
     );""")
     
     conn.commit()
+
+    

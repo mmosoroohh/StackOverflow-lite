@@ -1,64 +1,54 @@
-import unittest
-import os
 import json
+from .base_test import BaseTestCase
 
 
-from app.manage import migrate, reset_migration
-
-from app.app import create_app
-
-
-class StackOverflow_lite_Users(unittest.TestCase):
-    """This class represent Users."""
-
-    def setUp(self):
-        """Define test variables and initialize."""
-        self.app = create_app("testing")
-        migrate()
-
-        self.checker = self.app.test_client()
-        self.users = {'name': 'Arnold Osoro', 'email': 'arnoldmaengwe@gmail.com', 'password': '12345'}
-        self.default_user = {'name': 'Dan mark', 'email': 'dan@gmail.com', 'password': '12345'}
-        self.header = {"Content-Type": "application/json"}
-        self.checker.post('/api/v2/auth/signup', data=json.dumps(self.default_user), headers=self.header)
-      
-    
-    def test_signup_user(self):
-        """Test to register new user."""
-        data = self.users
-        response = self.checker.post('/api/v2/auth/signup', data=json.dumps(data), headers=self.header)
-
-        result = json.loads(response.data.decode())
-
-        self.assertEquals(result['message'],'New user registered!')
+class QuestionsTestCase(BaseTestCase):
         
+    def test_post_question(self):
+        """Test posting a question."""
+        response = self.client.post(
+            '/api/v2/questions', data=json.dumps(self.questions), headers=self.authHeaders)
 
-    def test_signin_user_with_invalid_email_password(self):
-        """Test user trying to login with invalid email."""
-        data = self.users
-        response = self.checker.post('/api/v2/auth/signin', data=json.dumps(data), headers=self.header)
+        self.assertEqual(response.status_code, 201)
 
-        result = json.loads(response.data.decode())
+    def test_get_all_questions(self):
+        """Test user view all questions."""
+        response = self.client.get(
+            '/api/v2/questions', data=json.dumps(self.questions), headers=self.authHeaders)
 
-        self.assertEqual(result['message'], "Email not found", "Incorrect password")
+        self.assertEqual(response.status_code, 200)
 
+    def test_view_single_question(self):
+        """Test user view a single question."""
+        response = self.client.get(
+            '/api/v2/questions/1', data=json.dumps(self.questions), headers=self.authHeaders)
 
-    def test_signin_user(self):
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_question(self):
+        """Test user can edit a question."""
+        response = self.client.post(
+            '/api/v2/questions', data=json.dumps(self.questions), headers=self.authHeaders)
+        self.assertEqual(response.status_code, 201)  
+
+        response = self.client.put(
+            '/api/v2/questions/1', data=json.dumps(self.questions_1), headers=self.authHeaders)
+
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(
+            '/api/v2/questions/1', data=json.dumps(self.questions), headers=self.authHeaders)
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_question(self):
+        """Test user can delete a question."""
+        response = self.client.get(
+            '/api/v2/questions/1', data=json.dumps(self.questions), headers=self.authHeaders)
         
-        data = self.default_user
-        response = self.checker.post('/api/v2/auth/signin', data=json.dumps(data), headers=self.header)
+        self.assertEqual(response.status_code, 200)
 
-        result = json.loads(response.data.decode())
-
-        self.assertEqual(result['message'], "Logged in successfully!")
-
+        response = self.client.delete(
+            '/api/v2/questions/1', data=json.dumps(self.questions), headers=self.authHeaders)
         
-    
-    def tearDown(self):
-        reset_migration()
-        
-
-if __name__ == "__main__":
-    unittest.main()
-
-    
+        self.assertEqual(response.status_code, 200)

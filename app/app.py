@@ -2,6 +2,7 @@ from flask_api import FlaskAPI
 from flask import Flask, jsonify
 from flask_jwt_extended import JWTManager
 from app.database import Database
+from flask_cors import CORS
 db = Database()
 
 # local import
@@ -11,6 +12,7 @@ def create_app(config_name):
 
     app = FlaskAPI(__name__, instance_relative_config=True)
     app.config.from_object(app_config[config_name])
+    CORS(app)
 
     db.init_app(app)
 

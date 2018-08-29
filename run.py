@@ -1,5 +1,4 @@
 import os
-
 from app.app import create_app
 
 config_name = os.getenv('ENVIRONMENT')  # config_name = "development"

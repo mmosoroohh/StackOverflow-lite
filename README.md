@@ -110,9 +110,19 @@ $ nosetests --with-coverage
 <td>POST</td>
 </tr>
 <tr>
+<td>View all Answers</td>
+<td>/api/v2/answers</td>
+<td>GET</td>
+</tr>
+<tr>
+<td>Prefered Answer</td>
+<td>/api/v2/answers/answer_id</td>
+<td>POST</td>
+</tr>
+<tr>
 <td>User sign out</td>
 <td>/api/v2/auth/signout</td>
-<td>POST</td>
+<td>PUT</td>
 </tr>
 </tr>
 </table>

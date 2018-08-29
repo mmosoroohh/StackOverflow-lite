@@ -25,9 +25,9 @@
     <!--Main Area-->
     <main>
         <h2 style="text-align: center">Post a Question</h2>
-        <div class="card" style="align-content: left">
-            <textarea name="answer" id="answer" placeholder="Write your question..." style="height: 200px;"></textarea>
-            <input type="submit" value="Post a Question">
+        <div class="card" method="POST" enctype="multipart/formdata" style="align-content: left">
+            <textarea name="answer" id="question" placeholder="Write your question..." style="height: 200px;"></textarea>
+            <input id="post_question" type="submit" value="Post a Question">
         </div>
     </main>
 </body>

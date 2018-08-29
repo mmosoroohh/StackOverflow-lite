@@ -7,22 +7,32 @@ from passlib.handlers.bcrypt import bcrypt
 from datetime import datetime
 from app.helpers import insert_user, get_user, post_question, get_questions, get_question, edit_question, delete_question, get_answer, get_answers, mark_answer
 from app.models import User, Questions, Answer
+from app.validate import validate_email, user_detail_verification
+import re
 
 
 web = Blueprint("web",__name__)
 
 @web.route('/api/v2/auth/signup', methods=['POST'])
 def signup_user():
+    name = request.json['name']
+    email = request.json['email']
     user = get_user(request.json.get('email'))
+
     if user is not None:
         return jsonify({'message': "Email already exists."})
+
+    if user_detail_verification(name):
+        return user_detail_verification(name)
+    if validate_email(email):
+        return validate_email(email)
 
     user = User(name = request.json.get("name"),
                 email = request.json.get("email"),
                 password = bcrypt.encrypt(request.json.get("password")))
     user.save()
 
-    return jsonify({'message': 'New user registered!', 'User': user.__dict__})
+    return jsonify({'message': 'New user registered!', 'User': user.__dict__}), 201
 
 @web.route('/api/v2/auth/signin', methods=['POST'])
 def signin():

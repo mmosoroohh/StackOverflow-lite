@@ -40,4 +40,16 @@ class Answer(object):
     def save(self):
         helpers.answer_question(self)
 
+class Blacklist(object):
+    """This class represents Access tokens for Authentication."""
+    
+    def __init__(self, token=""):
+        self.token = token
+
+    def save(self):
+        helpers.insert_blacklist(self)
+
+    def __repr__(self):
+        return "Blacklist: {}".format(self.token)
+
         

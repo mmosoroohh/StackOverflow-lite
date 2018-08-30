@@ -11,6 +11,7 @@ StackOverflow-lite is a platform where people can ask questions and provide answ
 - Edit a specific question
 - Delete a specific question
 - Post an answer to a question
+- Mark a preferred answer
 
 # Prerequisities
 - Python 3.6 or a later version
@@ -117,11 +118,6 @@ $ nosetests --with-coverage
 <tr>
 <td>Prefered Answer</td>
 <td>/api/v2/answers/answer_id</td>
-<td>POST</td>
-</tr>
-<tr>
-<td>User sign out</td>
-<td>/api/v2/auth/signout</td>
 <td>PUT</td>
 </tr>
 </tr>

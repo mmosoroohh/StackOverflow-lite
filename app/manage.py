@@ -34,6 +34,7 @@ def migrate():
         date_posted TIMESTAMP,
         user_id INT, 
         FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
     );""")
     
     cur.execute("""CREATE TABLE IF NOT EXISTS answers(
@@ -43,8 +44,14 @@ def migrate():
         status varchar,
         question_id INT,
         FOREIGN KEY (question_id) REFERENCES questions(id)
+        ON DELETE CASCADE
     );""")
     
+    cur.execute("""CREATE TABLE IF NOT EXISTS blacklist(
+        id serial PRIMARY KEY, 
+        token varchar
+        );""")
+        
     conn.commit()
 
     

@@ -6,7 +6,7 @@ from flask_jwt_extended import (jwt_required, create_access_token, get_jwt_ident
 from passlib.handlers.bcrypt import bcrypt
 from datetime import datetime
 from app.helpers import insert_user, get_user, post_question, get_questions, get_question, edit_question, delete_question, get_answer, get_answers, mark_answer
-from app.models import User, Questions, Answer
+from app.models import User, Questions, Answer, Blacklist
 from app.validate import validate_email, user_detail_verification
 import re
 
@@ -63,7 +63,7 @@ def question():
         date_posted = datetime.now(),
         user_id = (user["id"]))
     question.save()
-    return jsonify({'Questions': question.__dict__}), 201
+    return jsonify({'Question': question.__dict__}), 201
 
 @web.route('/api/v2/questions', methods=['GET'])
 @jwt_required
@@ -84,11 +84,11 @@ def single_question(id):
     user = get_user(email)
 
     # retrive a question by it's ID
-    question = get_question(user['id'])
+    question = get_question(id)
     if question is None:
         return jsonify({'message': 'Question not available'})
 
-    return jsonify({'Questions': question}), 200
+    return jsonify({'Question': question}), 200
 
 @web.route('/api/v2/questions/<int:id>', methods=['PUT'])
 @jwt_required
@@ -96,7 +96,7 @@ def modify_question(id):
     email = get_jwt_identity()
     user = get_user(email)
     # Edit a specific question 
-    edit = get_question(user['id'])
+    edit = get_question(id)
 
     if edit is None:
         return jsonify({'message': 'Question not available'})
@@ -106,7 +106,7 @@ def modify_question(id):
 
     edit_question(id, edit)
 
-    return jsonify({'Questions': edit}), 200
+    return jsonify({'Question': edit, 'message': 'Question has been updated!'}), 200
 
 @web.route('/api/v2/questions/<int:id>', methods=['DELETE'])
 @jwt_required
@@ -114,7 +114,7 @@ def remove_question(id):
     email = get_jwt_identity()
     user = get_user(email)
     # Delete a specific question 
-    question = get_question(user['id'])
+    question = get_question(id)
     if question is None:
         return jsonify({'message': 'Question not available'})
 
@@ -129,27 +129,28 @@ def answer_question(id):
     user = get_user(email)
 
     # Answer a specific question
-    question = get_question(user['id'])
+    question = get_question(id)
     
     answers = Answer(
         answer = request.json.get("answer"),
         date_posted = datetime.now(),
         question_id = question['id'])
     answers.save()
-    return jsonify({'Answers': answers.__dict__}), 201
+    return jsonify({'Question': question, 'Answer': answers.__dict__}), 201
 
-@web.route('/api/v2/answers', methods=['GET'])
+@web.route('/api/v2/questions/<int:id>/answers', methods=['GET'])
 @jwt_required
-def view_all_answers():
+def view_all_answers(id):
     email = get_jwt_identity()
     user = get_user(email)
-    question = get_question(user['id'])
+    
+    question = get_question(id)
 
-    answers = get_answers(question['id'][0])
+    answers = get_answers(id)
     if answers is None:
         return jsonify({'message': 'Answers not found!'})
 
-    return jsonify({'Answers': answers})
+    return jsonify({'Question':question, 'Answers': answers})
 
 @web.route('/api/v2/answers/<int:id>', methods=['PUT'])
 @jwt_required
@@ -157,10 +158,9 @@ def prefered_answer(id):
     # retrieve a answer by it'd ID
     email = get_jwt_identity()
     user = get_user(email)
-    question = get_question(user['id'])
-
+    
     # Mark a specific answer
-    mark = get_answer(question['id'])
+    mark = get_answer(id)
 
     if mark is None:
         return jsonify({'message': 'Answer not available'})
@@ -177,5 +177,8 @@ def prefered_answer(id):
 @jwt_required
 def signout():
     # Log out a sign in user
-    return jsonify({'message': 'Logged out successfully!'})
+    jti = get_raw_jwt()['jti']
+    Blacklist.save(jti)
+    return jsonify({'message': 'Logged out successfully!'}), 200
+    
 

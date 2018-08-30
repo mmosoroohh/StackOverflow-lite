@@ -45,12 +45,12 @@ def get_questions(user_id):
     
 
 def get_question(id):
-    cur.execute("SELECT * FROM QUESTIONS WHERE id = %s", (id,))
-    questions = cur.fetchone()
-    if questions is None:
+    cur.execute("SELECT * FROM QUESTIONS WHERE id=%s", (id,))
+    question = cur.fetchone()
+    if question is None:
         return None
     conn.commit()
-    return questions
+    return question
 
 def edit_question(id, question):
     cur.execute("UPDATE questions SET question = %s, date_posted = %s WHERE id = %s", (
@@ -60,7 +60,8 @@ def edit_question(id, question):
     conn.commit()
 
 def delete_question(id):
-    cur.execute("DELETE FROM questions WHERE id = %s", (id,))
+    cur.execute("DELETE FROM questions WHERE id = %s", (id,)) 
+    cur.execute("DELETE FROM answers WHERE id= %s",(id,))
     conn.commit()
 
 def answer_question(answers):
@@ -83,6 +84,7 @@ def get_answer(id):
 def get_answers(question_id):
     cur.execute("SELECT * FROM ANSWERS WHERE question_id =%s",(question_id,))
     answers = cur.fetchall()
+    print(answers)
     rows = []
     for row in answers:
         rows.append(dict(row))
@@ -97,6 +99,21 @@ def mark_answer(id, answers):
         answers['id']))
     conn.commit()
 
+def get_by_field(token):
+    cur.execute("SELECT * FROM blacklist WHERE token={}".format(
+        token))
+    items = cur.fetchone()
+    print(items)
+    if items is None:
+        return None
+    else:
+        return items[token]
+    
+
+def insert_blacklist(token):
+    cur.execute("INSERT INTO BLACKLIST(token) values(%s)",
+        [token])
+    conn.commit()
 
 def drop_everything(self):
     self.cur.execute("DROP TABLE users;")

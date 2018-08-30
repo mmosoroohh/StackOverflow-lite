@@ -12,6 +12,8 @@ class DevelopmentConfig(Config):
     DEBUG = True
     DATABASE_NAME = 'stackoverflow_lite'
     JWT_SECRET_KEY = "gvhbjnkmsjbknmlnjk"
+    JWT_BLACKLIST_ENABLED = False
+    JWT_BLACKLIST_TOKEN_CHECKS = 'access'
 
 class TestingConfig(Config):
     """Configuration for Testing."""

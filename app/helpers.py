@@ -84,7 +84,6 @@ def get_answer(id):
 def get_answers(question_id):
     cur.execute("SELECT * FROM ANSWERS WHERE question_id =%s",(question_id,))
     answers = cur.fetchall()
-    print(answers)
     rows = []
     for row in answers:
         rows.append(dict(row))
@@ -103,7 +102,6 @@ def get_by_field(token):
     cur.execute("SELECT * FROM blacklist WHERE token={}".format(
         token))
     items = cur.fetchone()
-    print(items)
     if items is None:
         return None
     else:

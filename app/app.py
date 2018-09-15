@@ -46,6 +46,10 @@ def create_app(config_name):
     @app.errorhandler(405)
     def method_not_allowed(error):
         return jsonify({"message": "This method is not allowed, Please check again!"})
+
+    @app.errorhandler(400)
+    def bad_request(error):
+        return jsonify({'message': "This is Bad request, Please check your format"})
     
 
     return app

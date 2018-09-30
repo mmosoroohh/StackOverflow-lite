@@ -1,14 +1,16 @@
 from flask import Blueprint
 from flask_api import FlaskAPI
-from flask import request, jsonify, abort, make_response, json
+from flask import request, jsonify, abort, make_response, json, render_template
 from flask_jwt_extended import (jwt_required, create_access_token, get_jwt_identity, get_raw_jwt)
 
 from passlib.handlers.bcrypt import bcrypt
 from datetime import datetime
-from app.helpers import insert_user, get_user, post_question, get_questions, get_question, edit_question, delete_question, get_answer, get_answers, mark_answer
+from app.helpers import insert_user, get_user, post_question, get_questions, get_question, edit_question, delete_question, get_answer, get_answers, mark_answer, display_questions
 from app.models import User, Questions, Answer, Blacklist
 from app.validate import validate_email, user_detail_verification
 import re
+
+from app.app import create_app
 
 
 web = Blueprint("web",__name__)
@@ -180,5 +182,14 @@ def signout():
     jti = get_raw_jwt()['jti']
     Blacklist.save(jti)
     return jsonify({'message': 'Logged out successfully!'}), 200
-    
 
+
+@web.route('/api/v2/users/questions', methods=['GET'])
+def all_questions():
+
+    questions = display_questions()
+    if questions is None:
+    # retrieve all questions
+        return jsonify({'message': 'No questions found'})
+    return jsonify({'Questions': questions}), 200
+    

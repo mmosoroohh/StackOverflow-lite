@@ -1,3 +1,4 @@
+from flask import request
 import psycopg2
 import psycopg2.extras
 import os
@@ -40,6 +41,10 @@ def get_questions(user_id):
         rows.append(dict(row))
     if rows is None:
         return None
+
+    # import pdb;pdb.set_trace()
+    for row in rows:
+        row["url"] = request.host_url + "question/"+str(row["id"])
     conn.commit()
     return rows
     
@@ -97,6 +102,18 @@ def mark_answer(id, answers):
         answers['status'],
         answers['id']))
     conn.commit()
+
+def display_questions():
+    cur.execute("SELECT * FROM QUESTIONS ")
+    questions = cur.fetchall()
+    # import pdb;pdb.set_trace()
+    rows = []
+    for row in questions:
+        rows.append(dict(row))
+    if rows is None:
+        return None
+    return questions
+
 
 def get_by_field(token):
     cur.execute("SELECT * FROM blacklist WHERE token={}".format(

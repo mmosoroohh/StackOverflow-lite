@@ -34,7 +34,12 @@ def post_question(questions):
     return cur.fetchone().get('id')
 
 def get_questions(user_id):
-    cur.execute("SELECT * FROM QUESTIONS WHERE user_id =%s",(user_id,))
+    # import pdb; pdb.set_trace()
+    cur.execute("""
+        SELECT Q.id, Q.user_id, Q.question, Q.date_posted, U.name
+        FROM QUESTIONS Q INNER JOIN USERS U on Q.user_id = U.id
+        WHERE Q.user_id = %s""",(user_id,))
+    
     questions = cur.fetchall()
     rows = []
     for row in questions:
@@ -70,11 +75,12 @@ def delete_question(id):
     conn.commit()
 
 def answer_question(answers):
-    cur.execute("INSERT INTO ANSWERS (answer, date_posted, status, question_id) values(%s,%s,%s,%s) returning id",(
+    cur.execute("INSERT INTO ANSWERS (answer, date_posted, status, question_id, user_id) values(%s,%s,%s,%s, %s) returning id",(
         answers.answer,
         answers.date_posted,
         'pending',
-        answers.question_id))
+        answers.question_id,
+        answers.user_id))
     conn.commit()
     return cur.fetchone().get('id')
 
@@ -87,7 +93,9 @@ def get_answer(id):
     return answers
 
 def get_answers(question_id):
-    cur.execute("SELECT * FROM ANSWERS WHERE question_id =%s",(question_id,))
+    cur.execute("""SELECT A.id, A.answer, A.date_posted, A.user_id, A.question_id, U.name
+                FROM ANSWERS A INNER JOIN USERS U on A.user_id= U.id
+                WHERE A.question_id=%s""",(question_id,))
     answers = cur.fetchall()
     rows = []
     for row in answers:
@@ -104,7 +112,8 @@ def mark_answer(id, answers):
     conn.commit()
 
 def display_questions():
-    cur.execute("SELECT * FROM QUESTIONS ")
+    cur.execute("""SELECT Q.id, Q.user_id, Q.question, Q.date_posted, U.name
+        FROM QUESTIONS Q INNER JOIN USERS U on Q.user_id = U.id""")
     questions = cur.fetchall()
     # import pdb;pdb.set_trace()
     rows = []

@@ -43,6 +43,8 @@ def migrate():
         date_posted TIMESTAMP,
         status varchar,
         question_id INT,
+        user_id INT,
+        FOREIGN KEY (user_id) REFERENCES users(id) on delete cascade,
         FOREIGN KEY (question_id) REFERENCES questions(id)
         ON DELETE CASCADE
     );""")

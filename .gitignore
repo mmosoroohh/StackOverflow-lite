@@ -8,5 +8,6 @@ test_questions.pyc
 app.pyc
 .env
 models.pyc 
+.vscode/
 
 

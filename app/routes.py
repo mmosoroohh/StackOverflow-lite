@@ -136,7 +136,8 @@ def answer_question(id):
     answers = Answer(
         answer = request.json.get("answer"),
         date_posted = datetime.now(),
-        question_id = question['id'])
+        question_id = question['id'],
+        user_id = (user["id"]))
     answers.save()
     return jsonify({'Question': question, 'Answer': answers.__dict__}), 201
 

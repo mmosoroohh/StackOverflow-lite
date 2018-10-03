@@ -31,11 +31,24 @@ class Questions(object):
 class Answer(object):
     """This class represents the users on StackOverflow-lite API."""
 
-    def __init__(self, id=0, answer="", date_posted="", question_id=""):
+    def __init__(self, id=0, answer="", date_posted="", question_id="", user_id=""):
         self.id = id
         self.answer = answer
         self.date_posted = date_posted
         self.question_id = question_id
+        self.user_id = user_id
         
     def save(self):
         helpers.answer_question(self)
+
+class Blacklist(object):
+    """This class represents Access tokens for Authentication."""
+
+    def __init__(self, token=""):
+        self.token = token
+    
+    def save(self):
+        helpers.insert_blacklist(self)
+
+    def __repr__(self):
+        return "Blacklist: {}".format(self.token)

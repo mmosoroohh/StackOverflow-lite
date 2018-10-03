@@ -1,3 +1,4 @@
+from flask import request
 import psycopg2
 import psycopg2.extras
 import os
@@ -33,24 +34,33 @@ def post_question(questions):
     return cur.fetchone().get('id')
 
 def get_questions(user_id):
-    cur.execute("SELECT * FROM QUESTIONS WHERE user_id =%s",(user_id,))
+    # import pdb; pdb.set_trace()
+    cur.execute("""
+        SELECT Q.id, Q.user_id, Q.question, Q.date_posted, U.name
+        FROM QUESTIONS Q INNER JOIN USERS U on Q.user_id = U.id
+        WHERE Q.user_id = %s""",(user_id,))
+    
     questions = cur.fetchall()
     rows = []
     for row in questions:
         rows.append(dict(row))
     if rows is None:
         return None
+
+    # import pdb;pdb.set_trace()
+    for row in rows:
+        row["url"] = request.host_url + "question/"+str(row["id"])
     conn.commit()
     return rows
     
 
 def get_question(id):
-    cur.execute("SELECT * FROM QUESTIONS WHERE id = %s", (id,))
-    questions = cur.fetchone()
-    if questions is None:
+    cur.execute("SELECT * FROM QUESTIONS WHERE id=%s", (id,))
+    question = cur.fetchone()
+    if question is None:
         return None
     conn.commit()
-    return questions
+    return question
 
 def edit_question(id, question):
     cur.execute("UPDATE questions SET question = %s, date_posted = %s WHERE id = %s", (
@@ -60,15 +70,17 @@ def edit_question(id, question):
     conn.commit()
 
 def delete_question(id):
-    cur.execute("DELETE FROM questions WHERE id = %s", (id,))
+    cur.execute("DELETE FROM questions WHERE id = %s", (id,)) 
+    cur.execute("DELETE FROM answers WHERE id= %s",(id,))
     conn.commit()
 
 def answer_question(answers):
-    cur.execute("INSERT INTO ANSWERS (answer, date_posted, status, question_id) values(%s,%s,%s,%s) returning id",(
+    cur.execute("INSERT INTO ANSWERS (answer, date_posted, status, question_id, user_id) values(%s,%s,%s,%s, %s) returning id",(
         answers.answer,
         answers.date_posted,
         'pending',
-        answers.question_id))
+        answers.question_id,
+        answers.user_id))
     conn.commit()
     return cur.fetchone().get('id')
 
@@ -81,7 +93,9 @@ def get_answer(id):
     return answers
 
 def get_answers(question_id):
-    cur.execute("SELECT * FROM ANSWERS WHERE question_id =%s",(question_id,))
+    cur.execute("""SELECT A.id, A.answer, A.date_posted, A.user_id, A.question_id, U.name
+                FROM ANSWERS A INNER JOIN USERS U on A.user_id= U.id
+                WHERE A.question_id=%s""",(question_id,))
     answers = cur.fetchall()
     rows = []
     for row in answers:
@@ -97,11 +111,36 @@ def mark_answer(id, answers):
         answers['id']))
     conn.commit()
 
+def display_questions():
+    cur.execute("""SELECT Q.id, Q.user_id, Q.question, Q.date_posted, U.name
+        FROM QUESTIONS Q INNER JOIN USERS U on Q.user_id = U.id""")
+    questions = cur.fetchall()
+    # import pdb;pdb.set_trace()
+    rows = []
+    for row in questions:
+        rows.append(dict(row))
+    if rows is None:
+        return None
+    return questions
+
+
+def get_by_field(token):
+    cur.execute("SELECT * FROM blacklist WHERE token={}".format(
+        token))
+    items = cur.fetchone()
+    if items is None:
+        return None
+    else:
+        return items[token]
+    
+
+def insert_blacklist(token):
+    cur.execute("INSERT INTO BLACKLIST(token) values(%s)",
+        [token])
+    conn.commit()
 
 def drop_everything(self):
     self.cur.execute("DROP TABLE users;")
     self.cur.execute("DROP TABLE questions;")
     self.cur.execute("DROP TABLE answers;")
     self.conn.commit()
-
-    

@@ -9,11 +9,13 @@ from app.helpers import insert_user, get_user, post_question, get_questions, get
 from app.models import User, Questions, Answer, Blacklist
 from app.validate import validate_email, user_detail_verification
 import re
+from flask_cors import CORS
 
 from app.app import create_app
 
 
 web = Blueprint("web",__name__)
+CORS(web)
 
 
 @web.route('/api/v2/auth/signup', methods=['POST'])

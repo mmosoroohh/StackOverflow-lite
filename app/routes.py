@@ -2,6 +2,7 @@ from flask import Blueprint
 from flask_api import FlaskAPI
 from flask import request, jsonify, abort, make_response, json
 from flask_jwt_extended import (jwt_required, create_access_token, get_jwt_identity, get_raw_jwt)
+from flask_cors import CORS
 
 from passlib.handlers.bcrypt import bcrypt
 from datetime import datetime
@@ -14,6 +15,7 @@ from app.app import create_app
 
 
 web = Blueprint("web",__name__)
+CORS(web)
 
 
 @web.route('/api/v2/auth/signup', methods=['POST'])

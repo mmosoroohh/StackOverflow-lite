@@ -75,7 +75,8 @@ def delete_question(id):
     conn.commit()
 
 def answer_question(answers):
-    cur.execute("INSERT INTO ANSWERS (answer, date_posted, status, question_id, user_id) values(%s,%s,%s,%s, %s) returning id",(
+    print(answers.user_id)
+    cur.execute("INSERT INTO ANSWERS (answer, date_posted, status, question_id, user_id) values(%s,%s,%s,%s,%s) returning id",(
         answers.answer,
         answers.date_posted,
         'pending',
